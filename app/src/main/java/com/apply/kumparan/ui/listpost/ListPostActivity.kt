@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.apply.kumparan.R
 import com.apply.kumparan.data.response.PostResponse
 import com.apply.kumparan.databinding.ActivityListPostBinding
+import com.apply.kumparan.ui.detailpost.DetailPostActivity
 import com.apply.kumparan.viewmodel.ViewModelFactory
 
 class ListPostActivity : AppCompatActivity() {
@@ -34,7 +35,10 @@ class ListPostActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
         adapter.setOnItemClickCallback(object : ListPostAdapter.OnItemClickCallback {
             override fun onItemClicked(data: PostResponse) {
-
+                Intent(this@ListPostActivity, DetailPostActivity::class.java).also {
+                    it.putExtra(DetailPostActivity.EXTRA_POST, data)
+                    startActivity(it)
+                }
             }
         })
         binding.apply {

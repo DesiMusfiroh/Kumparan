@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apply.kumparan.data.api.ApiConfig
+import com.apply.kumparan.data.response.CommentResponse
 import com.apply.kumparan.data.response.PostResponse
+import com.apply.kumparan.data.response.UserResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,20 +35,34 @@ class RemoteDataSource {
         return results
     }
 
-//    fun getListPost(): LiveData<List<PostResponse>> {
-//        val results = MutableLiveData<List<PostResponse>>()
-//        ApiConfig.getApiService().getListPost().enqueue(object: Callback<ListPostResponse> {
-//            override fun onResponse(call: Call<ListPostResponse>, response: Response<ListPostResponse>) {
-//                if (response.isSuccessful) {
-//                    results.postValue(response.body()?.posts)
-//                } else {
-//                    Log.e(TAG, "onFailure Response: ${response.message()}")
-//                }
-//            }
-//            override fun onFailure(call: Call<ListPostResponse>, t: Throwable) {
-//                Log.e(TAG, "onFailure: ${t.message.toString()}")
-//            }
-//        })
-//        return results
-//    }
+    fun getPostComments(postId: Int): LiveData<ArrayList<CommentResponse>>  {
+        val results = MutableLiveData<ArrayList<CommentResponse>>()
+        ApiConfig.getApiService().getPostComments(postId).enqueue(object : Callback<ArrayList<CommentResponse>> {
+            override fun onFailure(call: Call<ArrayList<CommentResponse>>, t: Throwable) {
+                t.message?.let { Log.d(TAG, it) }
+            }
+            override fun onResponse(call: Call<ArrayList<CommentResponse>>, response: Response<ArrayList<CommentResponse>>) {
+                if (response.isSuccessful) {
+                    results.postValue(response.body())
+                    Log.d(TAG, response.body().toString())
+                }
+            }
+        })
+        return results
+    }
+
+    fun getDetailUser(userId: Int): LiveData<UserResponse> {
+        val user = MutableLiveData<UserResponse>()
+        ApiConfig.getApiService().getDetailUser(userId).enqueue(object : Callback<UserResponse>{
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                t.message?.let { Log.d(TAG, it) }
+            }
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                if (response.isSuccessful) {
+                    user.postValue(response.body())
+                }
+            }
+        })
+        return user
+    }
 }

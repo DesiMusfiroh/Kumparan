@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.apply.kumparan.data.DataRepository
 import com.apply.kumparan.di.Injection
+import com.apply.kumparan.ui.detailpost.DetailPostViewModel
+import com.apply.kumparan.ui.userdetail.UserDetailViewModel
 import com.apply.kumparan.ui.listpost.ListPostViewModel
 
 class ViewModelFactory private constructor(private val dataRepository: DataRepository)
@@ -25,6 +27,12 @@ class ViewModelFactory private constructor(private val dataRepository: DataRepos
         return when {
             modelClass.isAssignableFrom(ListPostViewModel::class.java) -> {
                 ListPostViewModel(dataRepository) as T
+            }
+            modelClass.isAssignableFrom(DetailPostViewModel::class.java) -> {
+                DetailPostViewModel(dataRepository) as T
+            }
+            modelClass.isAssignableFrom(UserDetailViewModel::class.java) -> {
+                UserDetailViewModel(dataRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

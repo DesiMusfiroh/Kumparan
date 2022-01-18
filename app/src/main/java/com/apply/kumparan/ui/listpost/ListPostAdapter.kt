@@ -30,8 +30,8 @@ class ListPostAdapter(private val list: ArrayList<PostResponse>) : RecyclerView.
     }
 
     override fun onBindViewHolder(holder: ListPostViewHolder, position: Int) {
-        val news = list[position]
-        holder.bind(news)
+        val posts = list[position]
+        holder.bind(posts)
         holder.itemView.setOnClickListener {
             @Suppress("DEPRECATION")
             onItemClickCallback.onItemClicked(list[holder.adapterPosition])

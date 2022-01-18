@@ -13,4 +13,7 @@
     <string name="post_body">Post Body</string>
     <string name="posted_by">Posted By</string>
     <string name="list_post">List Post</string>
+    <string name="comment_name">Comment Name</string>
+    <string name="comment_body">Comment Body</string>
+    <string name="comments">Comments</string>
 </resources>
