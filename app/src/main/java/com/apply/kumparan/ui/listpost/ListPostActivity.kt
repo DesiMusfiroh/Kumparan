@@ -41,6 +41,7 @@ class ListPostActivity : AppCompatActivity() {
             override fun onItemClicked(data: PostResponse) {
                 Intent(this@ListPostActivity, DetailPostActivity::class.java).also {
                     it.putExtra(DetailPostActivity.EXTRA_POST, data)
+                    it.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     startActivity(it)
                 }
             }

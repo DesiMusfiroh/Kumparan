@@ -46,8 +46,6 @@ class DetailPostActivity : AppCompatActivity() {
         showRecyclerView()
         getPostComments(postId)
         getDetailUser(userId)
-
-
     }
 
     private fun showRecyclerView() {
@@ -76,6 +74,7 @@ class DetailPostActivity : AppCompatActivity() {
                 binding.tvUser.setOnClickListener {
                     val intent = Intent(this, UserDetailActivity::class.java)
                     intent.putExtra(UserDetailActivity.EXTRA_USER, user)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     startActivity(intent)
                 }
             })

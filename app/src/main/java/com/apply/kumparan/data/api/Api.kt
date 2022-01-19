@@ -36,4 +36,7 @@ interface Api {
 
     @GET("users")
     fun getUsers(): Call<ArrayList<UserResponse>>
+
+    @GET("photos")
+    fun getPhotos(): Call<ArrayList<PhotoResponse>>
 }

@@ -21,4 +21,6 @@
     <string name="address">Address</string>
     <string name="company">Company</string>
     <string name="albums">Albums</string>
+    <string name="photo">Photo</string>
+    <string name="photo_title">Photo Title</string>
 </resources>
