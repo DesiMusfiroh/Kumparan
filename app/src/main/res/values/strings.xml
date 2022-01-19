@@ -16,4 +16,9 @@
     <string name="comment_name">Comment Name</string>
     <string name="comment_body">Comment Body</string>
     <string name="comments">Comments</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
+    <string name="company">Company</string>
+    <string name="albums">Albums</string>
 </resources>

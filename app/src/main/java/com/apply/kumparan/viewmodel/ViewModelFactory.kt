@@ -8,6 +8,7 @@ import com.apply.kumparan.di.Injection
 import com.apply.kumparan.ui.detailpost.DetailPostViewModel
 import com.apply.kumparan.ui.userdetail.UserDetailViewModel
 import com.apply.kumparan.ui.listpost.ListPostViewModel
+import com.apply.kumparan.ui.photodetail.PhotoDetailViewModel
 
 class ViewModelFactory private constructor(private val dataRepository: DataRepository)
     : ViewModelProvider.NewInstanceFactory() {
@@ -33,6 +34,9 @@ class ViewModelFactory private constructor(private val dataRepository: DataRepos
             }
             modelClass.isAssignableFrom(UserDetailViewModel::class.java) -> {
                 UserDetailViewModel(dataRepository) as T
+            }
+            modelClass.isAssignableFrom(PhotoDetailViewModel::class.java) -> {
+                PhotoDetailViewModel(dataRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

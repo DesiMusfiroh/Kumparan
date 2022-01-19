@@ -11,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Kumparan">
-        <activity android:name=".ui.userdetail.UserDetailActivity"></activity>
-        <activity android:name=".ui.detailpost.DetailPostActivity" />
+        <activity android:name=".ui.photodetail.PhotoDetailActivity" android:parentActivityName=".ui.userdetail.UserDetailActivity"/>
+        <activity android:name=".ui.userdetail.UserDetailActivity" android:parentActivityName=".ui.detailpost.DetailPostActivity" />
+        <activity android:name=".ui.detailpost.DetailPostActivity" android:parentActivityName=".ui.listpost.ListPostActivity"/>
         <activity android:name=".ui.listpost.ListPostActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>

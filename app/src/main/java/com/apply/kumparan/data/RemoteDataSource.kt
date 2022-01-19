@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.apply.kumparan.data.api.ApiConfig
-import com.apply.kumparan.data.response.CommentResponse
-import com.apply.kumparan.data.response.PostResponse
-import com.apply.kumparan.data.response.UserResponse
+import com.apply.kumparan.data.response.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -64,5 +62,68 @@ class RemoteDataSource {
             }
         })
         return user
+    }
+
+    fun getUserAlbums(userId: Int): LiveData<ArrayList<AlbumResponse>>  {
+        val results = MutableLiveData<ArrayList<AlbumResponse>>()
+        ApiConfig.getApiService().getUserAlbums(userId).enqueue(object : Callback<ArrayList<AlbumResponse>> {
+            override fun onFailure(call: Call<ArrayList<AlbumResponse>>, t: Throwable) {
+                t.message?.let { Log.d(TAG, it) }
+            }
+            override fun onResponse(call: Call<ArrayList<AlbumResponse>>, response: Response<ArrayList<AlbumResponse>>) {
+                if (response.isSuccessful) {
+                    results.postValue(response.body())
+                    Log.d(TAG, response.body().toString())
+                }
+            }
+        })
+        return results
+    }
+
+    fun getAlbumPhotos(albumId: Int): LiveData<ArrayList<PhotoResponse>>  {
+        val results = MutableLiveData<ArrayList<PhotoResponse>>()
+        ApiConfig.getApiService().getAlbumPhotos(albumId).enqueue(object : Callback<ArrayList<PhotoResponse>> {
+            override fun onFailure(call: Call<ArrayList<PhotoResponse>>, t: Throwable) {
+                t.message?.let { Log.d(TAG, it) }
+            }
+            override fun onResponse(call: Call<ArrayList<PhotoResponse>>, response: Response<ArrayList<PhotoResponse>>) {
+                if (response.isSuccessful) {
+                    results.postValue(response.body())
+                    Log.d(TAG, response.body().toString())
+                }
+            }
+        })
+        return results
+    }
+
+    fun getDetailPhoto(photoId: Int): LiveData<PhotoResponse> {
+        val photo = MutableLiveData<PhotoResponse>()
+        ApiConfig.getApiService().getDetailPhoto(photoId).enqueue(object : Callback<PhotoResponse>{
+            override fun onFailure(call: Call<PhotoResponse>, t: Throwable) {
+                t.message?.let { Log.d(TAG, it) }
+            }
+            override fun onResponse(call: Call<PhotoResponse>, response: Response<PhotoResponse>) {
+                if (response.isSuccessful) {
+                    photo.postValue(response.body())
+                }
+            }
+        })
+        return photo
+    }
+
+    fun getUsers(): LiveData<ArrayList<UserResponse>>  {
+        val results = MutableLiveData<ArrayList<UserResponse>>()
+        ApiConfig.getApiService().getUsers().enqueue(object : Callback<ArrayList<UserResponse>> {
+            override fun onFailure(call: Call<ArrayList<UserResponse>>, t: Throwable) {
+                t.message?.let { Log.d(TAG, it) }
+            }
+            override fun onResponse(call: Call<ArrayList<UserResponse>>, response: Response<ArrayList<UserResponse>>) {
+                if (response.isSuccessful) {
+                    results.postValue(response.body())
+                    Log.d(TAG, response.body().toString())
+                }
+            }
+        })
+        return results
     }
 }

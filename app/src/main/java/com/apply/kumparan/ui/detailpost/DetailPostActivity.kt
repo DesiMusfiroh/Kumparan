@@ -3,6 +3,7 @@ package com.apply.kumparan.ui.detailpost
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import com.apply.kumparan.data.response.PostResponse
 import com.apply.kumparan.databinding.ActivityDetailPostBinding
 import com.apply.kumparan.ui.userdetail.UserDetailActivity
 import com.apply.kumparan.viewmodel.ViewModelFactory
+import java.lang.StringBuilder
 
 class DetailPostActivity : AppCompatActivity() {
     companion object {
@@ -26,6 +28,7 @@ class DetailPostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailPostBinding.inflate(layoutInflater)
         supportActionBar?.title = "Detail Post Page"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(binding.root)
 
         val factory = ViewModelFactory.getInstance(this)
@@ -43,6 +46,8 @@ class DetailPostActivity : AppCompatActivity() {
         showRecyclerView()
         getPostComments(postId)
         getDetailUser(userId)
+
+
     }
 
     private fun showRecyclerView() {
@@ -67,10 +72,10 @@ class DetailPostActivity : AppCompatActivity() {
     private fun getDetailUser(userId: Int?) {
         if (userId != null) {
             viewModel.getDetailUser(userId).observe(this, Observer { user ->
-                binding.tvUser.text = user.username
+                binding.tvUser.text = StringBuilder("Posted by : ${user.name}")
                 binding.tvUser.setOnClickListener {
                     val intent = Intent(this, UserDetailActivity::class.java)
-                    intent.putExtra(UserDetailActivity.EXTRA_USER, user.id)
+                    intent.putExtra(UserDetailActivity.EXTRA_USER, user)
                     startActivity(intent)
                 }
             })
