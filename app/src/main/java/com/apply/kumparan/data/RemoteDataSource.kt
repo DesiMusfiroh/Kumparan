@@ -63,38 +63,6 @@ class RemoteDataSource {
         })
         return user
     }
-//
-//    fun getUserAlbums(userId: Int): LiveData<ArrayList<AlbumResponse>>  {
-//        val results = MutableLiveData<ArrayList<AlbumResponse>>()
-//        ApiConfig.getApiService().getUserAlbums(userId).enqueue(object : Callback<ArrayList<AlbumResponse>> {
-//            override fun onFailure(call: Call<ArrayList<AlbumResponse>>, t: Throwable) {
-//                t.message?.let { Log.d(TAG, it) }
-//            }
-//            override fun onResponse(call: Call<ArrayList<AlbumResponse>>, response: Response<ArrayList<AlbumResponse>>) {
-//                if (response.isSuccessful) {
-//                    results.postValue(response.body())
-//                    Log.d(TAG, response.body().toString())
-//                }
-//            }
-//        })
-//        return results
-//    }
-
-    fun getAlbumPhotos(albumId: Int): LiveData<ArrayList<PhotoResponse>>  {
-        val results = MutableLiveData<ArrayList<PhotoResponse>>()
-        ApiConfig.getApiService().getAlbumPhotos(albumId).enqueue(object : Callback<ArrayList<PhotoResponse>> {
-            override fun onFailure(call: Call<ArrayList<PhotoResponse>>, t: Throwable) {
-                t.message?.let { Log.d(TAG, it) }
-            }
-            override fun onResponse(call: Call<ArrayList<PhotoResponse>>, response: Response<ArrayList<PhotoResponse>>) {
-                if (response.isSuccessful) {
-                    results.postValue(response.body())
-                    Log.d(TAG, response.body().toString())
-                }
-            }
-        })
-        return results
-    }
 
     fun getDetailPhoto(photoId: Int): LiveData<PhotoResponse> {
         val photo = MutableLiveData<PhotoResponse>()
@@ -163,7 +131,6 @@ class RemoteDataSource {
                                     response.body()?.forEach { photoResponse ->
                                         photos.add(photoResponse)
                                     }
-                                    Log.d(TAG, "PHOTOS ALBUM === ${response.body()}")
                                 }
                                 override fun onFailure(call: Call<ArrayList<PhotoResponse>>, t: Throwable) {
                                     t.message?.let { Log.d(TAG, it) }
@@ -171,11 +138,9 @@ class RemoteDataSource {
                             })
 
                             val albumItem = AlbumResponse(album.id, album.title, album.userId, photos)
-                            Log.d(TAG, "ALBUM ITEM === $albumItem")
                             albumList.add(albumItem)
                         }
                     }
-                    Log.d(TAG, "ALBUM LIST === ${albumList}")
                     results.postValue(albumList)
                     Log.d(TAG, response.body().toString())
                 }

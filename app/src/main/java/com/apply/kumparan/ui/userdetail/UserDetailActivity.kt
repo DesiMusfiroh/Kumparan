@@ -39,19 +39,13 @@ class UserDetailActivity : AppCompatActivity() {
             tvAddress.text = StringBuilder("${user.address?.street}, ${user.address?.suite}, ${user.address?.city}. Postcode: ${user.address?.zipcode}")
             tvCompany.text = user.company?.name
         }
-        viewModel.getPhotos().observe(this, Observer { photos = it })
+        viewModel.getPhotos().observe(this, { photos = it })
         showRecyclerView()
         getUserAlbums(user.id)
     }
 
     private fun showRecyclerView() {
         albumsAdapter.notifyDataSetChanged()
-        albumsAdapter.setPhotos(object: UserAlbumsAdapter.GetPhotos {
-            override fun getPhotos(albumId: Int): ArrayList<PhotoResponse>? {
-                return viewModel.getAlbumsPhotos(albumId).value
-            }
-        } )
-
         binding.apply {
             rvAlbums.layoutManager = LinearLayoutManager(this@UserDetailActivity)
             rvAlbums.setHasFixedSize(true)
@@ -61,7 +55,7 @@ class UserDetailActivity : AppCompatActivity() {
 
     private fun getUserAlbums(userId: Int?) {
         if (userId != null) {
-            viewModel.getUserAlbums(userId).observe(this, Observer {
+            viewModel.getUserAlbums(userId).observe(this, {
                 if (it != null) {
                     albumsAdapter.setList(it)
                 }
